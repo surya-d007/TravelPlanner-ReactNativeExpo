@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TextInput,Image, FlatList, Text, Pressable, StyleSheet, KeyboardAvoidingView, Platform, Button, ScrollView } from 'react-native';
+import { View, TextInput,Image, FlatList, Text, Pressable, StyleSheet, KeyboardAvoidingView, Platform, Button, ScrollView , Vibration } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -68,7 +68,23 @@ const Newtrip = ({ navigation }) => {
   const [distanceData, setDistanceData] = useState([]);
   const [activeInput, setActiveInput] = useState({ day: null, placeIndex: null });
 
+  //const API_KEY = 'AIzaSyDsTXMntd-2w7pTrQePS7cJdM1kXvQ7beE';
   const API_KEY = 'AIzaSyDsTXMntd-2w7pTrQePS7cJdM1kXvQ7beE';
+
+
+  useEffect(() => {
+    // Initialize your state variables here, or fetch initial data if needed
+    setTripName('');
+    setCountryName('');
+    setDate(new Date());
+    setInputDate('');
+    setNumNights(0);
+    setNumPeople(0);
+    setNumDays(0);
+    setDays([]);
+  },[]);
+
+
 
   const fetchPlaces = async (searchQuery, dayIndex, placeIndex) => {
     if (searchQuery.length > 2) {
@@ -111,16 +127,24 @@ const Newtrip = ({ navigation }) => {
   };
 
   const handleNumDaysChange = (text) => {
-    const number = parseInt(text, 10);
-    setNumDays(number);
-    const newDays = Array.from({ length: number }, () => ({
-      numPlaces: 0,
-      places: [],
-    }));
-    setDays(newDays);
+    if (text === '') {
+      setNumDays(0); // Set numDays to 0 if the input is empty
+    } else {
+      const number = parseInt(text, 10);
+      setNumDays(number);
+      const newDays = Array.from({ length: number }, () => ({
+        numPlaces: 0,
+        places: [],
+      }));
+      setDays(newDays);
+    }
   };
+  
 
   const handleNumPlacesChange = (text, dayIndex) => {
+    if (text === '') {
+      text = '0'; // Set text to '0' if it's empty
+    }
     const number = parseInt(text, 10);
     const newDays = [...days];
     newDays[dayIndex].numPlaces = number;
@@ -136,7 +160,17 @@ const Newtrip = ({ navigation }) => {
 
 
 
-  const handleNextPress = async() => {
+
+  const [isPressed, setIsPressed] = useState(false);
+  const handlePressIn = () => {
+    Vibration.vibrate(15); // Vibrate for 50ms
+    setIsPressed(true);
+  };
+
+
+  const handlePressOut = async() => {
+    setIsPressed(false);
+    
   
     //Gather all the required data
     const tripData = {
@@ -153,6 +187,12 @@ const Newtrip = ({ navigation }) => {
         })),
       })),
     };
+
+  
+
+  
+    // Clear active input state as well if needed
+
 
     //  const tripData =  {
     //   "tripName": "Chennai trip",
@@ -217,18 +257,32 @@ const Newtrip = ({ navigation }) => {
     //console.log('Trip Data:', JSON.stringify(tripData, null, 2));
     
     //navigation.navigate('Upload Your tickets', { tripData });
-    
-    const userId = await AsyncStorage.getItem('userEmail');
+
+    const userId = await AsyncStorage.getItem('Email');
     navigation.navigate('Upload Your tickets' , { tripData , userId });
+    
+    setTripName('');
+    setCountryName('');
+    setDate(new Date());
+    setInputDate('');
+    setNumNights(0);
+    setNumPeople(0);
+    setNumDays(0);
+    setDays([]);
   };
+
+
+
   
 
 
 
 
-
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} >
+    <KeyboardAvoidingView   behavior={Platform.OS === "ios" ? "padding" : "height"}
+    keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
+    style={{ flex: 1 }}
+    >
       <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
           <View className='flex-1 px-2 py-12 pt-8 bg-[#fafcff]'>
           <View className='px-5'>
@@ -331,7 +385,7 @@ const Newtrip = ({ navigation }) => {
           <View key={dayIndex} className='my-6'>
 
             <View className='items-center py-6'>
-                <Text style={styles.popreg}>- - - - - Day {dayIndex + 1} - - - - -</Text>
+                <Text style={[styles.popsemi , {fontSize:16}]}>- - - - - Day {dayIndex + 1} - - - - -</Text>
               </View>
               
             
@@ -359,12 +413,12 @@ const Newtrip = ({ navigation }) => {
                 />
                 {activeInput.day === dayIndex && activeInput.placeIndex === placeIndex && (
                   <FlatList
-                    className ='absolute z-10 top-20 w-full'
+                    className ='absolute z-10 top-20 w-full '
                     data={place.suggestions}
                     keyExtractor={(item) => item.place_id}
                     renderItem={({ item }) => (
                       <Pressable onPress={() => handlePlaceSelect(item, dayIndex, placeIndex)}>
-                        <View className='border border-[1.4px] border-t-[0.7px] border-b-[0.7px] border-[#D0D5DD]  h-14 pl-3 items-start justify-center bg-white'>
+                        <View className='border border-[1.4px] border-t-[0.7px] border-b-[0.7px] border-[#D0D5DD] rounded-xl  h-14 pl-3 items-start justify-center bg-white roun'>
                           <Text>{item.description}</Text>
                         </View>
                       </Pressable>
@@ -378,25 +432,24 @@ const Newtrip = ({ navigation }) => {
         ))}
 
 
-          <Pressable onPress={handleNextPress}>
+          
             <View className='items-end my-5'>
-              <View className='items-end my-5 mr-6'>
+              <View className='items-end my-5 mr-3'>
+
+              <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} className='p-5 pr-3 '>
                 <View
-                  className='flex flex-row gap-x-2 items-center justify-center h-12 w-28 rounded-2xl border-[0.2px] bg-white'
-                  style={styles.card}
+                  className='flex flex-row gap-x-2 items-center justify-center h-12 w-32 rounded-2xl border-[0.2px] bg-white'
+                  style={[styles.card , isPressed && styles.cardPressed ]}
                 >
                   <View>
-                    <Text className='text-base' style={styles.popreg}>Next</Text>
+                    <Text className=' text-base ' style={[styles.popsemi , isPressed && styles.text]}>Next  >>  </Text>
                   </View>
-                  <Image
-                    source={require('../assets/next.png')} // Replace with your actual image path
-                    className='h-3 mt-[-1px]'
-                    resizeMode='contain'
-                  />
+                  
                 </View>
+                </Pressable>
               </View>
             </View>
-          </Pressable>
+          
 
 
 
@@ -428,6 +481,12 @@ const styles = StyleSheet.create({
   },
   popsemi: {
     fontFamily: 'Poppins-SemiBold',
+  },
+  cardPressed:{
+    backgroundColor: '#000' ,
+  },
+  text:{
+    color : '#fff'
   },
 });
 

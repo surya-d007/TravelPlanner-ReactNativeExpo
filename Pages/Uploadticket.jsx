@@ -1,4 +1,4 @@
-import { View, Text , StyleSheet , Image, Pressable, Alert } from 'react-native'
+import { View, Text , StyleSheet , Image, Pressable, Alert , Vibration } from 'react-native'
 import React , {useEffect , useState , useRef} from 'react'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,7 +12,8 @@ import { ScrollView } from 'react-native';
 SplashScreen.preventAutoHideAsync();
 
 import * as DocumentPicker from 'expo-document-picker';
-import * as Permissions from 'expo-permissions';
+import * as MediaLibrary from 'expo-media-library';
+//import * as Permissions from 'expo-permissions';
 
 
 
@@ -41,7 +42,7 @@ const Uploadticket = ({ route , navigation}) => {
   useEffect(() => {
     const fetchEmail = async () => {
       try {
-        const storedEmail = await AsyncStorage.getItem('userEmail');
+        const storedEmail = await AsyncStorage.getItem('Email');
         if (storedEmail !== null) {
           userEmail = storedEmail;
           console.log('User Email:', userEmail);
@@ -69,10 +70,9 @@ const Uploadticket = ({ route , navigation}) => {
 
   useEffect(() => {
     (async () => {
-      const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
-      if (status !== 'granted') {
-        alert('Permission to access media library required!');
-      }
+      //const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+     
+const { status } = await MediaLibrary.requestPermissionsAsync();
     })();
   }, []);
 
@@ -89,6 +89,7 @@ const Uploadticket = ({ route , navigation}) => {
 
 
   const pickDocument1 = async () => {
+    Vibration.vibrate(15); // Vibrate for 50ms
     try {
       const document = await DocumentPicker.getDocumentAsync({
         type: 'image/*', // Allow any image format
@@ -154,6 +155,7 @@ const Uploadticket = ({ route , navigation}) => {
 
   
   const pickDocument2 = async () => {
+    Vibration.vibrate(15); // Vibrate for 50ms
     try {
       const document = await DocumentPicker.getDocumentAsync({
         type: 'image/*', // Allow any image format
@@ -216,9 +218,22 @@ const Uploadticket = ({ route , navigation}) => {
     }
   };
 
-  const navigatetoReview = async() => {
+  
+
+
+  
+  const [isPressed, setIsPressed] = useState(false);
+  const handlePressIn = () => {
+    Vibration.vibrate(15); // Vibrate for 50ms
+    setIsPressed(true);
+  };
+
+
+  const handlePressOut = async() => {
+    setIsPressed(false);
     navigation.navigate('ReviewTrip' , { tripData , img1 : uri1 , img2 : uri2 , imgInServer1 , imgInServer2 });
-  }
+    };
+
 
 
   return (
@@ -286,7 +301,7 @@ const Uploadticket = ({ route , navigation}) => {
                     <Image
                         source={require('../assets/Icon frame.png')} // Replace with your actual image path
                         resizeMode="contain"
-                        className = 'h-12'
+                        className = 'h-12 '
                     />
                     <View className='flex flex-row mt-2'>
                         <Text style={styles.popreg}>Click to Upload</Text>
@@ -322,20 +337,16 @@ const Uploadticket = ({ route , navigation}) => {
 
         </View>
 
-<Pressable  onPress={navigatetoReview}>
+
+<Pressable onPressIn={handlePressIn} onPressOut={handlePressOut}>
       <View className='items-end my-5 mt-6 mr-3'>
 
-      <View className='flex flex-row gap-x-2 items-center justify-center h-12 w-32 rounded-2xl border-[0.2px] bg-white' style ={styles.card}>
+      <View className='flex flex-row gap-x-2 items-center justify-center h-12 w-32 rounded-2xl border-[0.2px] bg-white' style={[styles.card , isPressed && styles.cardPressed ]}>
 
         <View  >
-          <Text className='text-base' style={styles.popreg}>Preview</Text>
+          <Text className='text-base' style={[styles.popsemi , isPressed && styles.text]}>Preview >></Text>
         </View>
 
-        <Image
-          source={require('../assets/next.png')} // Replace with your actual image path
-          className ='h-3 mt-[-1px]'
-          resizeMode="contain"
-        />
         
       </View>
       </View>
@@ -370,6 +381,12 @@ const styles = StyleSheet.create({
       },
       popsemi: {
         fontFamily: 'Poppins-SemiBold',
+      },
+      cardPressed:{
+        backgroundColor: '#000' ,
+      },
+      text:{
+        color : '#fff'
       },
 
   });

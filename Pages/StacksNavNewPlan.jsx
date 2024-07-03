@@ -9,12 +9,14 @@ import ReviewTrip from './ReviewTrip';
 const Stack = createStackNavigator();
 
 const StackNavigator = ({ navigation }) => {
+
+  
   return (
     <Stack.Navigator>
         <Stack.Screen name="New trip" component={Newtrip} 
          options={{
             headerLeft: () => (
-              <TouchableHighlight
+              <TouchableOpacity
                 onPress={() => navigation.navigate('Home')}
                 underlayColor="#aea6a6"
                 style={{
@@ -27,7 +29,7 @@ const StackNavigator = ({ navigation }) => {
                 <View>
                   <Icon name="arrow-back" size={22} color="black" />
                 </View>
-              </TouchableHighlight>
+              </TouchableOpacity>
             ),
           }}
          />

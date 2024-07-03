@@ -18,6 +18,15 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.suryad007.TrevelPlanner",
+      "permissions": ["INTERNET"],
+      "config": {
+        "cleartext": {
+          "config": {
+            "honor": true
+          }
+        }
       }
     },
     "web": {
@@ -25,6 +34,11 @@
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ceae84d0-d6e9-4751-b882-9cffd714088c"
+      }
+    }
   }
 }

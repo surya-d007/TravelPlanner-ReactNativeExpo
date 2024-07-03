@@ -31,6 +31,7 @@ const RegisterForm = ({ onRegister, onToggle }) => {
         onChangeText={setPassword}
         value={password}
         secureTextEntry
+        autoCapitalize="none"
       />
       <Button title="Register" onPress={handleRegister} />
       <TouchableOpacity onPress={onToggle}>
