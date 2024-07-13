@@ -17,6 +17,7 @@ const RegisterForm = ({ onRegister, onToggle }) => {
 
   return (
     <View style={styles.container}>
+      <Text  style={[styles.toggleText , {fontSize:27}]}>Register</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -33,7 +34,18 @@ const RegisterForm = ({ onRegister, onToggle }) => {
         secureTextEntry
         autoCapitalize="none"
       />
-      <Button title="Register" onPress={handleRegister} />
+      
+
+      <TouchableOpacity
+            style={styles.loginButton}
+            onPress={handleRegister}
+          >
+            <Text style={styles.loginButtonText}>
+            Register
+            </Text>
+          </TouchableOpacity>
+
+
       <TouchableOpacity onPress={onToggle}>
         <Text style={styles.toggleText}>Already have an account? Login</Text>
       </TouchableOpacity>
@@ -46,21 +58,45 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 20,
+    paddingHorizontal: 30,
+    backgroundColor: '#fafcff',
   },
   input: {
+    fontFamily: 'Poppins-Regular',
     width: '100%',
-    height: 40,
+    backgroundColor: "#fff",
+    height: 50,
+    fontSize: 18,
     marginVertical: 10,
     paddingHorizontal: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
   },
-  toggleText: {
-    color: 'blue',
+  loginButton: {
+    height: 45,
+    paddingHorizontal: 30,
+    backgroundColor: 'black',
+    borderRadius: 60,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 20,
   },
+  loginButtonText: {
+    
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'Poppins-SemiBold',
+      
+  },
+  toggleText: {
+    fontSize:14,
+    marginTop: 20,
+    fontFamily: 'Poppins-SemiBold',
+  },
 });
+
 
 export default RegisterForm;

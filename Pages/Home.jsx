@@ -87,7 +87,7 @@ const Home = ({ navigation }) => {
     <View style={{ flex: 1 }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: '#fafcff' }}
+        style={{ backgroundColor: '#fafcff' , paddingBottom : 30 }}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
