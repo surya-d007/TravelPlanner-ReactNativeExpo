@@ -106,8 +106,9 @@ export default function App() {
       if(response.status===200)
         Alert.alert('Success', 'Your Password has been sent to your email address');
     } catch (error) {
+      
       console.error('Error sending password reset email:', error.response ? error.response.data : error.message);
-      Alert.alert('Error', 'Unable to send password reset email');
+      Alert.alert('Error', `Unable to send password reset email ${error.response.data.error}`);
     }
   };
 

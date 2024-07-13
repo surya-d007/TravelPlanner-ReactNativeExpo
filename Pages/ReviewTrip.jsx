@@ -144,10 +144,17 @@ const ReviewTrip = ({ route , navigation}) => {
             </View>
           </View>
 
+          </View>
+       </View>
+       
+
+       <View className='flex-1  bg-[#fafcff] pb-4'>
           {tripData.days.map((day, index) => (
             <ReviewTripCard key={index} day={day} />
           ))}
+        </View>
 
+        <View className='flex-1 px-2 bg-[#fafcff]'>
           <View className='bg-[#fafcff] my-6'>
             <Text style={[styles.popsemi, { fontSize: 18 }]} className='mb-6'>Travel-to tickets : </Text>
             <View className='flex-1 items-center justify-center'>
@@ -172,8 +179,9 @@ const ReviewTrip = ({ route , navigation}) => {
               </View>
             </View>
           </Pressable>
-        </View>
-      </View>
+          </View>
+
+       
 
       {/* Conditional overlay view */}
       {isLoading && (

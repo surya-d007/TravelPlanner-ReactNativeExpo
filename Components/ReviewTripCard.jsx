@@ -3,6 +3,7 @@ import React from 'react';
 
 const ReviewTripCard = ({ day }) => {
   return (
+    <View className='px-6'>
     <View className='mt-5  rounded-xl my-6 ' style={styles.card}>
       <View className='bg-black h-12 rounded-xl'>
 
@@ -13,7 +14,7 @@ const ReviewTripCard = ({ day }) => {
       </View>
       </View>
 
-      <View className='px-3 py-3 pt-2 mt-4 bg-[#eff4ff] rounded-b-xl'>
+      <View className='px-3 py-3 pt-2 mt-4 bg-[#fafcff] rounded-b-xl'>
       {day.places.map((place, index) => (
         <View key={index} className='ml-4 mt-3'>
           <Text style={[styles.popsemi , {color : '#424242'}]}>●  <Text style={[styles.popsemi , {color : '#888A83'}]}>{place.description} </Text></Text>
@@ -22,6 +23,7 @@ const ReviewTripCard = ({ day }) => {
       </View>
 
 
+    </View>
     </View>
   );
 }
