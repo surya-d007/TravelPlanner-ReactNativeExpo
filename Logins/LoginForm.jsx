@@ -3,9 +3,10 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert, Text, TouchableOpacity } from 'react-native';
 
-const LoginForm = ({ onLogin, onToggle }) => {
+const LoginForm = ({ onLogin, onToggle, onForgotPassword }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
 
   const handleLogin = () => {
     if (!email || !password) {
@@ -13,6 +14,15 @@ const LoginForm = ({ onLogin, onToggle }) => {
       return;
     }
     onLogin(email, password);
+  };
+
+  const handleForgotPassword = async() => {
+    if (!email) {
+      Alert.alert('Error', 'Please enter your email');
+      return;
+    }
+    await onForgotPassword(email);
+    setIsForgotPassword(false);
   };
 
   return (
@@ -25,14 +35,30 @@ const LoginForm = ({ onLogin, onToggle }) => {
         keyboardType="email-address"
         autoCapitalize="none"
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        onChangeText={setPassword}
-        value={password}
-        secureTextEntry
-      />
-      <Button title="Login" onPress={handleLogin} />
+      {!isForgotPassword && (
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          onChangeText={setPassword}
+          value={password}
+          secureTextEntry
+        />
+      )}
+      {!isForgotPassword ? (
+        <>
+          <Button title="Login" onPress={handleLogin} />
+          <TouchableOpacity onPress={() => setIsForgotPassword(true)}>
+            <Text style={styles.toggleText}>Forgot Password?</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <>
+          <Button title="Reset Password" onPress={handleForgotPassword} />
+          <TouchableOpacity onPress={() => setIsForgotPassword(false)}>
+            <Text style={styles.toggleText}>Back to Login</Text>
+          </TouchableOpacity>
+        </>
+      )}
       <TouchableOpacity onPress={onToggle}>
         <Text style={styles.toggleText}>Don't have an account? Register</Text>
       </TouchableOpacity>

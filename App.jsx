@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, ActivityIndicator , Text } from 'react-native';
+import { View, SafeAreaView, ActivityIndicator , Text , Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
@@ -82,9 +82,11 @@ export default function App() {
         await AsyncStorage.setItem('Email', email); // Ensure the key 'Email' is consistent
         setLoggedIn(true);
       }
-      console.log('Login response:', response.config.data);
+      console.log('Login response:', response.error);
     } catch (error) {
-      console.error('Error logging in:', error);
+      console.error('Error logging in:', error.response.data);
+      Alert.alert('Login Error',error.response.data.error);
+      
     }
   };
 
@@ -94,6 +96,18 @@ export default function App() {
       await handleLogin(email, password); // Automatically log in after registration
     } catch (error) {
       console.error('Error registering:', error);
+    }
+  };
+
+
+  const handleForgotPassword = async (email) => {
+    try {
+      const response = await axios.post('http://192.168.29.253:3000/forgot-password', { email });
+      if(response.status===200)
+        Alert.alert('Success', 'Your Password has been sent to your email address');
+    } catch (error) {
+      console.error('Error sending password reset email:', error.response ? error.response.data : error.message);
+      Alert.alert('Error', 'Unable to send password reset email');
     }
   };
 
@@ -112,7 +126,7 @@ export default function App() {
           isRegistering ? (
             <RegisterForm onRegister={handleRegister} onToggle={() => setIsRegistering(false)} />
           ) : (
-            <LoginForm onLogin={handleLogin} onToggle={() => setIsRegistering(true)} />
+            <LoginForm onLogin={handleLogin} onToggle={() => setIsRegistering(true)}   onForgotPassword={handleForgotPassword}   />
           )
         ) : (
           <NavigationContainer>

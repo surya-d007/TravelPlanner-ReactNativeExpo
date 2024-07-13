@@ -189,8 +189,6 @@ const Newtrip = ({ navigation }) => {
     };
 
   
-
-  
     // Clear active input state as well if needed
 
 
