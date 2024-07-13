@@ -1,19 +1,22 @@
 import React , {useEffect , useState} from 'react';
-import { View, Text, StyleSheet, Pressable  , Linking , TouchableOpacity , Modal,} from 'react-native';
+import { View, Text, StyleSheet, Pressable  , Linking , TouchableOpacity , Modal, ScrollView} from 'react-native';
 
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import Day from './Day';
+import ReviewTripCard from './ReviewTripCard';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 SplashScreen.preventAutoHideAsync();
 
 
 export default function App({trip}) {
+
   const [modalVisible, setModalVisible] = useState(false);
 
 
 
-  //console.log(JSON.stringify(trip, null, 2));
+  console.log(JSON.stringify(trip, null, 2));
   //console.log("ffsj :  " + trip.location);
   
 
@@ -98,9 +101,14 @@ const navigateToLink = (url) => {
   Linking.openURL(url).catch((error) => console.error('Failed to open URL:', error));
 };
 
+const handlePress = () => {
+  const url = trip.location;
+  Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err));
+};
+
 
   return (
-    <View className='py-4 px-3 '>
+    <View className='py-4 px-6 pb-8'>
 
 <View className='items-center pb-6'> 
           <Text style={styles.popsemi}>- - - - -  {formatDateString2(trip.tripData.date)}  - - - - - </Text>
@@ -165,15 +173,79 @@ const navigateToLink = (url) => {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>This is the modal content</Text>
-            <TouchableOpacity
+             
+        <View  className='flex-1 h-full bg-[#fafcff] '>
+          <View  className=''>
+          <View style={styles.closeButtonText} className='bg-white  h-14 flex   justify-center ps-40 ms-20'>
+              <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.closeButtonText}>Close</Text>
-            </TouchableOpacity>
+             className="ms-10"> 
+              
+              <Icon name="arrow-back" size={27} color="black" className=" justify-center "/>
+              </TouchableOpacity>
+                </View>
+          <ScrollView showsVerticalScrollIndicator={false} className='mb-10'>
+
+          
+            
+            
+             
+              
+              
+              
+           
+              <View className='px-5'>
+          <View>
+            <Text className='my-3 mt-10' style={[styles.popsemi, { fontSize: 24 }]}>
+              Trip Name : <Text style={[styles.popsemi, { color: '#888A83' }]}> {trip.tripData.tripName}</Text>
+            </Text>
+            <Text className='mt-2' style={[styles.popsemi, { fontSize: 18 }]}>
+              Country Name : <Text style={[styles.popsemi, { color: '#888A83' }]}> {trip.tripData.countryName}</Text>
+            </Text>
+            <Text className='mt-4' style={[styles.popsemi, { fontSize: 18 }]}>
+              Trip starting Date : <Text style={[styles.popsemi, { color: '#888A83' }]}> {formatDateString(trip.tripData.date)} </Text>
+            </Text>
+
+
+            <Text className='mt-4' style={[styles.popsemi, { fontSize: 18 }]}>
+        Your Report: </Text>
+
+
+        <TouchableOpacity onPress={handlePress} className='my-4 bg-black px-7 py-2 rounded-3xl'>
+          <Text style={[styles.popsemi, { color: '#fff' , fontSize : 18}]}> View yout report >> </Text>
+        </TouchableOpacity>
+
+
+   
+      
+
+
+          </View>
+
+          <View className='flex flex-row flex-wrap mt-2'>
+            <View className='basis-1/2 pr-2 mt-5'>
+              <Text style={[styles.popsemi, { fontSize: 18 }]}>No of days : <Text style={[styles.popsemi, { color: '#888A83' }]}> {trip.tripData.days.length} </Text></Text>
+            </View>
+            <View className='basis-1/2 pl-2 mt-5'>
+              <Text style={[styles.popsemi, { fontSize: 18 }]}>No of Nights : <Text style={[styles.popsemi, { color: '#888A83' }]}> {trip.tripData.numNights}</Text></Text>
+            </View>
+            <View className='basis-1/2 pr-2 mt-5'>
+              <Text style={[styles.popsemi, { fontSize: 18 }]}>No of people : <Text style={[styles.popsemi, { color: '#888A83' }]}>{trip.tripData.numPeople}</Text></Text>
+            </View>
+          </View>
+
+          </View>
+
+              {trip.tripData.days.map((day, index) => (
+            <ReviewTripCard key={index} day={day} />
+              ))}
+
+              <View className='pb-6'>
+
+              </View>
+            
+          </ScrollView>
           </View>
         </View>
       </Modal>
@@ -198,7 +270,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 1,
-    elevation: 20,
+    elevation: 10,
   },
   popreg :{
     fontFamily : 'Poppins-Regular',

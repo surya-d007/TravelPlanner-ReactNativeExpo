@@ -287,7 +287,7 @@ const Newtrip = ({ navigation }) => {
 
                 
           <View>
-            <Text className='my-3' style={[styles.popsemi, { fontSize: 20 }]}>
+            <Text className='my-3 mt-3' style={[styles.popsemi, { fontSize: 20 }]}>
               Trip / Tour Name :
             </Text>
             <TextInput
