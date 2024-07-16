@@ -47,7 +47,7 @@ export default function App() {
     try {
       const email = await AsyncStorage.getItem('Email');
       if (email) {
-        const response = await axios.post('http://192.168.29.253:3000/checkV', { email });
+        const response = await axios.post('http://192.168.29.253/checkV', { email });
         console.log('Email found: ' + email);
         if (response.status === 200) {
           setLoggedIn(true);
@@ -73,7 +73,7 @@ export default function App() {
   const handleLogin = async (email, password) => {
     setIsLoading(true);
     try {
-      const response = await axios.post('http://192.168.29.253:3000/login', { email, password });
+      const response = await axios.post('http://192.168.29.253/login', { email, password });
       if (response.status === 200) {
         await AsyncStorage.setItem('Email', email);
         setLoggedIn(true);
@@ -94,7 +94,7 @@ export default function App() {
     }
     setIsLoading(true);
     try {
-      await axios.post('http://192.168.29.253:3000/register', { email, password });
+      await axios.post('http://192.168.29.253/register', { email, password });
       await handleLogin(email, password); // Automatically log in after registration
     } catch (error) {
       console.error('Error registering:', error);
@@ -106,7 +106,7 @@ export default function App() {
   const handleForgotPassword = async (email) => {
     setIsLoading(true);
     try {
-      const response = await axios.post('http://192.168.29.253:3000/forgot-password', { email });
+      const response = await axios.post('http://192.168.29.253/forgot-password', { email });
       if (response.status === 200) {
         Alert.alert('Success', 'Your Password has been sent to your email address');
       }

@@ -20,7 +20,9 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.suryad007.TrevelPlanner",
-      "permissions": ["INTERNET"],
+      "permissions": [
+        "INTERNET"
+      ],
       "config": {
         "cleartext": {
           "config": {
@@ -33,6 +35,14 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
       "expo-font"
     ],
     "extra": {

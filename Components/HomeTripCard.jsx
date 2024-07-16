@@ -14,9 +14,9 @@ export default function App({trip}) {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-
-
+  
   console.log(JSON.stringify(trip, null, 2));
+  
   //console.log("ffsj :  " + trip.location);
   
 
@@ -123,9 +123,12 @@ const handlePress = () => {
   {trip.tripData.tripName.length > 8 ? trip.tripData.tripName.slice(0, 7) + '..' : trip.tripData.tripName}
 </Text>
           <Text className="absolute top-9 left-7 text-[#ffffff] text-xl">- - - - - - -</Text>
-          <View className='py-5'>
-            <Text className='text-[#ffffff] text-right' style={styles.popreg}>No days : {trip.tripData.days.length} / {trip.tripData.numNights}N</Text>
-            <Text className='text-[#ffffff] text-right' style={styles.popreg}>Aproxx budget  : x K</Text>
+          <View className='py-5  w-[43vw]'>
+            <Text className='text-[#ffffff] text-right' style={styles.popreg}>No days: {trip.tripData.days.length} / {trip.tripData.numNights}N</Text>
+
+            <Text className='text-right ' style={{ color : 'white'}}><Text className='text-[#ffffff] text-right' style={styles.popreg}>Aprox budget: {Math.round(trip.costEstimation.totalCost / 1000)} k</Text> ₹ </Text>
+            
+            
           </View>
         </View>
 
@@ -235,13 +238,64 @@ const handlePress = () => {
             </View>
           </View>
 
+
           </View>
 
               {trip.tripData.days.map((day, index) => (
             <ReviewTripCard key={index} day={day} />
               ))}
 
-              <View className='pb-6'>
+            
+              
+              <View className='bg-white mx-6 rounded-xl my-12 p-5 '  style={styles.card}>
+                <Text  style={[styles.popsemi,{fontSize:25}]}>Total Trip Cost:</Text>
+                
+                <Text style={styles.popreg}>( Excluding travel to and return travel cost )</Text>
+
+                <View className='flex flex-col'>
+
+                  <View className=' flex-row mt-3'>
+                    <Text className='basis-3/5' style={[styles.popsemi, {color:'#575855' , fontSize:14}]}>Total Travelling Distance</Text>
+                    <Text className='basis-2/5'style={[styles.popsemi, {color:'#575855' , fontSize:14}]}>:  {Math.floor(trip.costEstimation.totalDistance)} kms</Text>
+                  </View>
+
+                  <View className=' flex-row pt-3'>
+                    <Text className='basis-3/5' style={[styles.popsemi, {color:'#575855' , fontSize:14}]}>Cost for Transport</Text>
+                    <Text className='basis-2/5'style={[styles.popsemi, {color:'#575855' , fontSize:14}]}>:  {Math.floor(trip.costEstimation.totalTransportationCost)} ₹</Text>
+                  </View>
+
+                  <View className=' flex-row'>
+                    <Text className='basis-3/5' style={[styles.popsemi, {color:'#575855' , fontSize:14}]}>Total Room Cost</Text>
+                    <Text className='basis-2/5' style={[styles.popsemi, {color:'#575855' , fontSize:14}]}>:  {Math.floor(trip.costEstimation.totalAccommodationCost)} ₹</Text>
+                  </View>
+
+                  <View className=' flex-row'>
+                    <Text className='basis-3/5' style={[styles.popsemi, {color:'#575855' , fontSize:14}]}>Food Cost</Text>
+                    <Text className='basis-2/5' style={[styles.popsemi, {color:'#575855' , fontSize:14}]}>:  {Math.floor(trip.costEstimation.totalFoodCost)} ₹</Text>
+                  </View>
+
+                  <View className='flex justify-center items-center'>
+                  <Text className='justify-center items-center' style={styles.popreg}>- - - - - - - - - - - - - - - - - - - - - - - -</Text>
+
+                  </View>
+
+                  
+
+                  <View className=' flex-row'>
+                    <Text className='basis-3/5' style={[styles.popsemi, {color:'#575855' , fontSize:14}]}>Total Cost For the Trip</Text>
+                    <Text className='basis-2/5' style={[styles.popsemi, {color:'#575855' , fontSize:14}]}>:  {Math.floor(trip.costEstimation.totalCost)} ₹</Text>
+                  </View>
+
+                  <View className='flex justify-center items-center'>
+                  <Text className='justify-center items-center' style={styles.popreg}>- - - - - - - - - - - - - - - - - - - - - - - -</Text>
+
+                  </View>
+
+
+                  
+                  
+
+                </View>
 
               </View>
             

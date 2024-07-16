@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Button, StyleSheet, Text, Image, ActivityIndicator, RefreshControl } from 'react-native';
+import { View, ScrollView, Button, StyleSheet, Text, Image, ActivityIndicator, RefreshControl, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomeTripCard from '../Components/HomeTripCard';
 import ButtonCom from '../Components/ButtonCom';
@@ -21,7 +21,7 @@ const Home = ({ navigation }) => {
     try {
       console.log('hi1');
       const userEmail = await AsyncStorage.getItem('Email');
-      const response = await fetch('http://192.168.29.253:3000/getUserData', {
+      const response = await fetch('http://192.168.29.253/getUserData', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,6 +37,7 @@ const Home = ({ navigation }) => {
       const data = await response.json();
       setTrips(data.trips || []);
     } catch (error) {
+      Alert.alert('error fecting data');
       console.error('Error fetching user data:', error);
     } finally {
       setIsLoading(false); // Set loading to false after data is fetched

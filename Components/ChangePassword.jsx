@@ -41,7 +41,7 @@ const ChangePassword = () => {
     } else if (stage === 2) {
       setIsLoading(true);
       try {
-        const response = await axios.post('http://192.168.29.253:3000/login', {
+        const response = await axios.post('http://192.168.29.253/login', {
           email,
           password: currentPassword,
         });
@@ -75,7 +75,7 @@ const ChangePassword = () => {
 
     setIsLoading(true);
     try {
-      const response = await axios.post('http://192.168.29.253:3000/change-password', {
+      const response = await axios.post('http://192.168.29.253/change-password', {
         email,
         newPassword,
       });
