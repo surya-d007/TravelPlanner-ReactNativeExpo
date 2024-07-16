@@ -252,9 +252,9 @@ const Newtrip = ({ navigation }) => {
 
 
   
-    //console.log('Trip Data:', JSON.stringify(tripData, null, 2));
+    console.log('Trip Data:', JSON.stringify(tripData, null, 2));
     
-    //navigation.navigate('Upload Your tickets', { tripData });
+    navigation.navigate('Upload Your tickets', { tripData });
 
     const userId = await AsyncStorage.getItem('Email');
     navigation.navigate('Upload Your tickets' , { tripData , userId });

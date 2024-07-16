@@ -86,7 +86,7 @@ const ReviewTrip = ({ route , navigation}) => {
     }, 1000);
 
     try {
-      const apiUrl = 'http://192.168.29.253:3000/api/GenerateReport'; // Replace with your server URL
+      const apiUrl = 'http://192.168.29.253/api/GenerateReport'; // Replace with your server URL
       const response = await axios.post(apiUrl, {
         userId: 'sury007',
         tripData,

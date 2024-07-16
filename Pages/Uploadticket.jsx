@@ -117,7 +117,7 @@ const { status } = await MediaLibrary.requestPermissionsAsync();
         formData.append('email', userEmail);
 
         // Send image file to Node.js server
-        const response = await fetch('http://192.168.29.253:3000/upload', {
+        const response = await fetch('http://192.168.29.253/upload', {
           method: 'POST',
           body: formData,
         });
@@ -180,7 +180,7 @@ const { status } = await MediaLibrary.requestPermissionsAsync();
         //formData.append('userId', userId); // Append userId to form data
 
         // Send image file to Node.js server
-        const response = await fetch('http://192.168.29.253:3000/upload', {
+        const response = await fetch('http://192.168.29.253/upload', {
           method: 'POST',
           body: formData,
         });
