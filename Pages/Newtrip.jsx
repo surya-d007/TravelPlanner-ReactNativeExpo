@@ -177,6 +177,7 @@ const Newtrip = ({ navigation }) => {
     setIsPressed(false);
 
     //Gather all the required data
+
     const tripData = {
       tripName: tripName,
       countryName: countryName,
@@ -192,64 +193,46 @@ const Newtrip = ({ navigation }) => {
       })),
     };
 
-    // Clear active input state as well if needed
-
-    //  const tripData =  {
-    //   "tripName": "Chennai trip",
-    //   "countryName": "India",
-    //   "date": "2024-07-12T04:20:00.000Z",
-    //   "numNights": 3,
-    //   "numPeople": 5,
-    //   "days": [
+    // const tripData = {
+    //   tripName: "Chennai trip",
+    //   countryName: "India",
+    //   date: "2024-07-12T04:20:00.000Z",
+    //   numNights: 3,
+    //   numPeople: 5,
+    //   days: [
     //     {
-    //       "day": 1,
-    //       "places": [
+    //       day: 1,
+    //       places: [
     //         {
-    //           "description": "Perambur, Chennai, Tamil Nadu, India",
-    //           "place_id": "ChIJm6CRQgVlUjoR00h7rxzlbyc"
+    //           description: "Perambur, Chennai, Tamil Nadu, India",
+    //           place_id: "ChIJm6CRQgVlUjoR00h7rxzlbyc",
     //         },
     //         {
-    //           "description": "ICF Chennai Charter Chapter, 2nd Street, Sri Sakthi Vijayalakshmi Nagar, Gangai Nagar, Velachery, Chennai, Tamil Nadu, India",
-    //           "place_id": "ChIJq6o2aYldUjoRZpp9UWU7w-I"
-    //         }
-    //       ]
+    //           description:
+    //             "ICF Chennai Charter Chapter, 2nd Street, Sri Sakthi Vijayalakshmi Nagar, Gangai Nagar, Velachery, Chennai, Tamil Nadu, India",
+    //           place_id: "ChIJq6o2aYldUjoRZpp9UWU7w-I",
+    //         },
+    //       ],
     //     },
     //     {
-    //       "day": 2,
-    //       "places": [
+    //       day: 2,
+    //       places: [
     //         {
-    //           "description": "VIT Chennai, Kelambakkam - Vandalur Road, Rajan Nagar, Chennai, Tamil Nadu, India",
-    //           "place_id": "ChIJZx9Jjq9ZUjoRLX11GxNCS5Q"
+    //           description:
+    //             "VIT Chennai, Kelambakkam - Vandalur Road, Rajan Nagar, Chennai, Tamil Nadu, India",
+    //           place_id: "ChIJZx9Jjq9ZUjoRLX11GxNCS5Q",
     //         },
     //         {
-    //           "description": "Vandalur, Tamil Nadu, India",
-    //           "place_id": "ChIJy7t0xgn2UjoRM_bhnwg2rB8"
+    //           description: "Vandalur, Tamil Nadu, India",
+    //           place_id: "ChIJy7t0xgn2UjoRM_bhnwg2rB8",
     //         },
     //         {
-    //           "description": "Tambaram, Chennai, Tamil Nadu, India",
-    //           "place_id": "ChIJD61KhBRfUjoR1DjOxGY6beE"
-    //         }
-    //       ]
+    //           description: "Tambaram, Chennai, Tamil Nadu, India",
+    //           place_id: "ChIJD61KhBRfUjoR1DjOxGY6beE",
+    //         },
+    //       ],
     //     },
-    //     {
-    //       "day": 3,
-    //       "places": [
-    //         {
-    //           "description": "VIT Chennai, Kelambakkam - Vandalur Road, Rajan Nagar, Chennai, Tamil Nadu, India",
-    //           "place_id": "ChIJZx9Jjq9ZUjoRLX11GxNCS5Q"
-    //         },
-    //         {
-    //           "description": "Vandalur, Tamil Nadu, India",
-    //           "place_id": "ChIJy7t0xgn2UjoRM_bhnwg2rB8"
-    //         },
-    //         {
-    //           "description": "Tambaram, Chennai, Tamil Nadu, India",
-    //           "place_id": "ChIJD61KhBRfUjoR1DjOxGY6beE"
-    //         }
-    //       ]
-    //     }
-
-    //   ]
+    //   ],
     // };
 
     console.log("Trip Data:", JSON.stringify(tripData, null, 2));
